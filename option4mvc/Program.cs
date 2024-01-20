@@ -14,8 +14,10 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 //default code edited to replace the AddDefaultIdentity method with the AddIdentity method
 //default code edited to reference ApplicationUser class instead of default IdentityUser class
 //AddDefaultTokenProviders method added to allow for account verification via phone or email using tokens
+// added AddDefaultUI method
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>()
+        .AddDefaultUI()
         .AddDefaultTokenProviders();
 builder.Services.AddControllersWithViews();
 
