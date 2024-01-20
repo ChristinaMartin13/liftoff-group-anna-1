@@ -130,16 +130,18 @@ namespace option4mvc.Areas.Identity.Pages.Account.Manage
             if (Input.Name != user.Name)
             {
                 user.Name = Input.Name;
+                await _userManager.UpdateAsync(user);
             }
 
             if (Input.Birthday != user.Birthday)
             {
                 user.Birthday = Input.Birthday;
+                await _userManager.UpdateAsync(user);
             }
-            //possibly here instead
-            await _userManager.UpdateAsync(user);
 
-            if(Input.ProfilePictureImageFile != null)
+          
+
+            if (Input.ProfilePictureImageFile != null)
             {
                 var result = _fileService.SaveImage(Input.ProfilePictureImageFile);
                 if(result.Item1 == 1)
