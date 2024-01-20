@@ -59,6 +59,7 @@ namespace option4mvc.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+            public string Name { get; set; }
         }
 
         private async Task LoadAsync(ApplicationUser user)
@@ -70,7 +71,8 @@ namespace option4mvc.Areas.Identity.Pages.Account.Manage
 
             Input = new InputModel
             {
-                PhoneNumber = phoneNumber
+                PhoneNumber = phoneNumber,
+                Name = user.Name
             };
         }
 
