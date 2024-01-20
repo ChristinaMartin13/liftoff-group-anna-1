@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using option4mvc.Data;
+using option4mvc.Services;
 
 namespace option4mvc.Areas.Identity.Pages.Account.Manage
 {
@@ -17,13 +18,17 @@ namespace option4mvc.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly IFileService _fileService;
 
         public IndexModel(
             UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager)
+            SignInManager<ApplicationUser> signInManager,
+            IFileService fileService
+            )
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            this._fileService = fileService;
         }
 
         /// <summary>
@@ -65,6 +70,8 @@ namespace option4mvc.Areas.Identity.Pages.Account.Manage
             [Display(Name = "Birth Date")]
             [DataType(DataType.Date)]
             public DateTime? Birthday { get; set; }
+            public string ProfilePicture { get; set; }
+            public IFormFile ProfilePictureImageFile { get; set; }
         }
 
         private async Task LoadAsync(ApplicationUser user)
@@ -78,7 +85,8 @@ namespace option4mvc.Areas.Identity.Pages.Account.Manage
             {
                 PhoneNumber = phoneNumber,
                 Name = user.Name,
-                Birthday = user.Birthday
+                Birthday = user.Birthday,
+                ProfilePicture=user.ProfilePicture
             };
         }
 
@@ -128,8 +136,20 @@ namespace option4mvc.Areas.Identity.Pages.Account.Manage
             {
                 user.Birthday = Input.Birthday;
             }
-
+            //possibly here instead
             await _userManager.UpdateAsync(user);
+
+            if(Input.ProfilePictureImageFile != null)
+            {
+                var result = _fileService.SaveImage(Input.ProfilePictureImageFile);
+                if(result.Item1 == 1)
+                {
+                    var oldImage = user.ProfilePicture;
+                    user.ProfilePicture = result.Item2;
+                    await _userManager.UpdateAsync(user);
+                    var deleteResult = _fileService.DeleteImage(oldImage);
+                }
+            }
 
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";
