@@ -9,7 +9,7 @@ namespace option4mvc.Data
     {
         //the IdentitiyUser parent class already contains the following properties: username, password, email, phone number
         public string? Name { get; set; }
-        public string? Birthday { get; set; }
+        public DateTime? Birthday { get; set; }
         public string? ProfilePicture {get; set; }
         public int AvailableRewardsPoints { get; set; } = 0; //initial value of 0
         public double AvailableStoreCredit {get; set;} = 0.00; //initial value of 0.00

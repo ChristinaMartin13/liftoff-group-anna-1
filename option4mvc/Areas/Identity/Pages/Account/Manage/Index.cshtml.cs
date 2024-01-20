@@ -60,6 +60,11 @@ namespace option4mvc.Areas.Identity.Pages.Account.Manage
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
             public string Name { get; set; }
+
+            [Required]
+            [Display(Name = "Birth Date")]
+            [DataType(DataType.Date)]
+            public DateTime? Birthday { get; set; }
         }
 
         private async Task LoadAsync(ApplicationUser user)
@@ -72,7 +77,8 @@ namespace option4mvc.Areas.Identity.Pages.Account.Manage
             Input = new InputModel
             {
                 PhoneNumber = phoneNumber,
-                Name = user.Name
+                Name = user.Name,
+                Birthday = user.Birthday
             };
         }
 
@@ -112,6 +118,18 @@ namespace option4mvc.Areas.Identity.Pages.Account.Manage
                     return RedirectToPage();
                 }
             }
+
+            if (Input.Name != user.Name)
+            {
+                user.Name = Input.Name;
+            }
+
+            if (Input.Birthday != user.Birthday)
+            {
+                user.Birthday = Input.Birthday;
+            }
+
+            await _userManager.UpdateAsync(user);
 
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";
