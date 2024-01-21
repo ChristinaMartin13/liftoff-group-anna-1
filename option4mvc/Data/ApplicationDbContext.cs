@@ -4,7 +4,8 @@ using option4mvc.Models;
 
 namespace option4mvc.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    //Below, the ApplicationUser subclass is referenced instead of the default IdentitiyUser class
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser> 
     {
         public DbSet<Cart> Cart { get; set; }
         public DbSet<Order> Order { get; set; }
