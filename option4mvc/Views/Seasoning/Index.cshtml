@@ -1,0 +1,10 @@
+﻿@model List<Seasoning>
+
+<h2>Seasoning List</h2>
+
+<ul>
+    @foreach (var seasoning in Model)
+    {
+        <li>@seasoning.Name - $@seasoning.Price</li>
+    }
+</ul>

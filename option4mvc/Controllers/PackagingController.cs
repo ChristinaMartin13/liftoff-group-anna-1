@@ -7,16 +7,16 @@ namespace option4mvc.Controllers
 {
     public class PackagingController : Controller
     {
-        private PopcornDbContext context;
-        public PackagingController(PopcornDbContext dbContext)
+        private ApplicationDbContext _context;
+        public PackagingController(ApplicationDbContext context)
         {
-            context = dbContext;
+            _context = context;
         }
 
         [HttpGet]
         public IActionResult Index()
         {
-            var packagingList = context.Packagings.ToList();
+            var packagingList = _context.Packagings.ToList();
             return View(packagingList);
         }
 
@@ -25,8 +25,8 @@ namespace option4mvc.Controllers
         {
             if (ModelState.IsValid)
             {
-                context.Packagings.Add(packaging);
-                context.SaveChanges();
+                _context.Packagings.Add(packaging);
+                _context.SaveChanges();
 
                 return RedirectToAction("Index");
             }
@@ -38,8 +38,8 @@ namespace option4mvc.Controllers
         {
             if (ModelState.IsValid)
             {
-                context.Entry(packaging).State = EntityState.Modified;
-                context.SaveChanges();
+                _context.Entry(packaging).State = EntityState.Modified;
+                _context.SaveChanges();
 
                 return RedirectToAction("Index");
             }
@@ -49,12 +49,12 @@ namespace option4mvc.Controllers
         [HttpPost]
         public IActionResult Delete(int id)
         {
-            var thePackaging = context.Packagings.Find(id);
+            var thePackaging = _context.Packagings.Find(id);
 
             if (thePackaging != null)
             {
-                context.Packagings.Remove(thePackaging);
-                context.SaveChanges();
+                _context.Packagings.Remove(thePackaging);
+                _context.SaveChanges();
 
                 return RedirectToAction("Index");
             }

@@ -8,17 +8,17 @@ namespace option4mvc.Controllers
 {
     public class PopcornController : Controller
     {
-        private PopcornDbContext context;
+        private ApplicationDbContext _context;
 
-        public PopcornController(PopcornDbContext dbContext)
+        public PopcornController(ApplicationDbContext context)
         {
-            context = dbContext;
+            _context = context;
         }
 
         [HttpGet]
         public IActionResult Index()
         {
-            var popcornList = context.Popcorns.ToList();
+            var popcornList = _context.Popcorns.ToList();
             return View(popcornList);
         }
 
@@ -27,8 +27,8 @@ namespace option4mvc.Controllers
         {
             if(ModelState.IsValid)
             {
-                context.Popcorns.Add(popcorn);
-                context.SaveChanges();
+                _context.Popcorns.Add(popcorn);
+                _context.SaveChanges();
 
                 return RedirectToAction("Index");
             }
@@ -40,8 +40,8 @@ namespace option4mvc.Controllers
         {
             if (ModelState.IsValid)
             {
-                context.Entry(popcorn).State = EntityState.Modified;
-                context.SaveChanges();
+                _context.Entry(popcorn).State = EntityState.Modified;
+                _context.SaveChanges();
 
                 return RedirectToAction("Index");
             }
@@ -51,12 +51,12 @@ namespace option4mvc.Controllers
         [HttpPost]
         public IActionResult Delete(int id)
         {
-            var thePopcorn = context.Popcorns.Find(id);
+            var thePopcorn = _context.Popcorns.Find(id);
 
             if (thePopcorn != null)
             {
-                context.Popcorns.Remove(thePopcorn);
-                context.SaveChanges();
+                _context.Popcorns.Remove(thePopcorn);
+                _context.SaveChanges();
 
                 return RedirectToAction("Index");
             }

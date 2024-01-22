@@ -7,16 +7,16 @@ namespace option4mvc.Controllers
 {
     public class SizeController : Controller
     {
-        private PopcornDbContext context;
-        public SizeController(PopcornDbContext dbContext)
+        private ApplicationDbContext _context;
+        public SizeController(ApplicationDbContext context)
         {
-            context = dbContext;
+            _context = context;
         }
 
         [HttpGet]
         public IActionResult Index()
         {
-            var sizeList = context.Sizes.ToList();
+            var sizeList = _context.Sizes.ToList();
             return View(sizeList);
         }
 
@@ -25,8 +25,8 @@ namespace option4mvc.Controllers
         {
             if (ModelState.IsValid)
             {
-                context.Sizes.Add(size);
-                context.SaveChanges();
+                _context.Sizes.Add(size);
+                _context.SaveChanges();
 
                 return RedirectToAction("Index");
             }
@@ -38,8 +38,8 @@ namespace option4mvc.Controllers
         {
             if (ModelState.IsValid)
             {
-                context.Entry(size).State = EntityState.Modified;
-                context.SaveChanges();
+                _context.Entry(size).State = EntityState.Modified;
+                _context.SaveChanges();
 
                 return RedirectToAction("Index");
             }
@@ -49,12 +49,12 @@ namespace option4mvc.Controllers
         [HttpPost]
         public IActionResult Delete(int id)
         {
-            var theSize = context.Sizes.Find(id);
+            var theSize = _context.Sizes.Find(id);
 
             if (theSize != null)
             {
-                context.Sizes.Remove(theSize);
-                context.SaveChanges();
+                _context.Sizes.Remove(theSize);
+                _context.SaveChanges();
 
                 return RedirectToAction("Index");
             }

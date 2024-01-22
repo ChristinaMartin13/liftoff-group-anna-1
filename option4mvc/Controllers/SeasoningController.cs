@@ -7,16 +7,16 @@ namespace option4mvc.Controllers
 {
     public class SeasoningController : Controller
     {
-        private PopcornDbContext context;
-        public SeasoningController(PopcornDbContext dbContext)
+        private ApplicationDbContext _context;
+        public SeasoningController(ApplicationDbContext context)
         {
-            context = dbContext;
+            _context = context;
         }
 
         [HttpGet]
         public IActionResult Index()
         {
-            var seasoningList = context.Seasonings.ToList();
+            var seasoningList = _context.Seasonings.ToList();
             return View(seasoningList);
         }
 
@@ -25,8 +25,8 @@ namespace option4mvc.Controllers
         {
             if (ModelState.IsValid)
             {
-                context.Seasonings.Add(seasoning);
-                context.SaveChanges();
+                _context.Seasonings.Add(seasoning);
+                _context.SaveChanges();
 
                 return RedirectToAction("Index");
             }
@@ -38,8 +38,8 @@ namespace option4mvc.Controllers
         {
             if (ModelState.IsValid)
             {
-                context.Entry(seasoning).State = EntityState.Modified;
-                context.SaveChanges();
+                _context.Entry(seasoning).State = EntityState.Modified;
+                _context.SaveChanges();
 
                 return RedirectToAction("Index");
             }
@@ -49,12 +49,12 @@ namespace option4mvc.Controllers
         [HttpPost]
         public IActionResult Delete(int id)
         {
-            var theSeasoning = context.Seasonings.Find(id);
+            var theSeasoning = _context.Seasonings.Find(id);
 
             if (theSeasoning != null)
             {
-                context.Seasonings.Remove(theSeasoning);
-                context.SaveChanges();
+                _context.Seasonings.Remove(theSeasoning);
+                _context.SaveChanges();
 
                 return RedirectToAction("Index");
             }

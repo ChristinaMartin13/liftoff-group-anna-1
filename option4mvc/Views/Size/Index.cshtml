@@ -1,0 +1,10 @@
+﻿@model List<Size>
+
+<h2>Size List</h2>
+
+<ul>
+    @foreach (var size in Model)
+    {
+        <li>@size.Name - $@size.Price</li>
+    }
+</ul>

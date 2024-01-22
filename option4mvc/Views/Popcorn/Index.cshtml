@@ -1,0 +1,10 @@
+﻿@model List<Popcorn>
+
+<h2>Popcorn List</h2>
+
+<ul>
+    @foreach (var popcorn in Model)
+    {
+        <li>@popcorn.Name - $@popcorn.Price</li>
+    }
+</ul>
