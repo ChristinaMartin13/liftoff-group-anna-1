@@ -22,6 +22,13 @@ namespace option4mvc.Controllers
             return View(popcornList);
         }
 
+        [HttpGet]
+        public IActionResult Create()
+        {
+            Popcorn popcorn = new Popcorn();
+            return View(popcorn);
+        }
+
         [HttpPost]
         public IActionResult Create(Popcorn popcorn)
         {
@@ -30,9 +37,9 @@ namespace option4mvc.Controllers
                 _context.Popcorns.Add(popcorn);
                 _context.SaveChanges();
 
-                return RedirectToAction("Index");
+                return Redirect("Index");
             }
-            return View(popcorn);
+            return View("Create", popcorn);
         }
 
         [HttpPost]

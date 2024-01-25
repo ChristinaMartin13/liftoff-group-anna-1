@@ -1,10 +1,48 @@
 ﻿@model List<Popcorn>
 
-<h2>Popcorn List</h2>
+@{
+    ViewData["Title"] = "Popcorn List";
+}
 
-<ul>
-    @foreach (var popcorn in Model)
+
+
+<div class="text-center">
+    <h1 class="display-4">Popcorn List</h1>
+
+    @if (Model.Count == 0)
     {
-        <li>@popcorn.Name - $@popcorn.Price</li>
+        <p>No items in inventory yet!</p>
     }
-</ul>
+    else
+    {
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Quantity</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Name</td>
+                    <td>@item.Description</td>
+                    <td>@item.Price</td>
+                    <td>@item.Quantity</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    }
+</div>
+
+<p><a asp-controller="Popcorn" asp-action="Create">Create Popcorn Item</a></p>
+
+<p><a asp-controller="Popcorn" asp-action="Delete">Delete Popcorn Item</a></p>
+
+<p><a asp-controller="Popcorn" asp-action="Edit">Edit Popcorn Item</a></p>
+
