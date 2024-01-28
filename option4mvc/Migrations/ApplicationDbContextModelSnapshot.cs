@@ -3,19 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using option4mvc.Data;
 
 #nullable disable
 
-namespace option4mvc.Data.Migrations
+namespace option4mvc.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240122000737_ChristinaCRUD1")]
-    partial class ChristinaCRUD1
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -270,8 +268,9 @@ namespace option4mvc.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<decimal?>("Price")
+                    b.Property<decimal?>("PackagingPrice")
                         .IsRequired()
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int?>("Quantity")
@@ -300,8 +299,9 @@ namespace option4mvc.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<decimal?>("Price")
+                    b.Property<decimal?>("PopcornPrice")
                         .IsRequired()
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int?>("Quantity")
@@ -330,12 +330,13 @@ namespace option4mvc.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<decimal?>("Price")
-                        .IsRequired()
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<int?>("Quantity")
                         .HasColumnType("int");
+
+                    b.Property<decimal?>("SeasoningPrice")
+                        .IsRequired()
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
@@ -360,12 +361,13 @@ namespace option4mvc.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<decimal?>("Price")
-                        .IsRequired()
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<int?>("Quantity")
                         .HasColumnType("int");
+
+                    b.Property<decimal?>("SizePrice")
+                        .IsRequired()
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 

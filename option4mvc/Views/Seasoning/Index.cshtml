@@ -1,36 +1,47 @@
 ﻿@model List<Seasoning>
 
-<h2>Seasoning List</h2>
+@{
+    ViewData["Title"] = "Seasoning List";
+}
 
-<p>
-    <a asp-action="Create">Add Seasoning Type</a>
-</p>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Price</th>
-            <th>Quantity</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+
+<div class="text-center">
+    <h1 class="display-4">Seasoning List</h1>
+
+    @if (Model.Count == 0)
+    {
+        <p>No items in inventory yet!</p>
+    }
+    else
+    {
+    <table class="table">
+        <thead>
             <tr>
-                <td>@item.Id</td>
-                <td>@item.Name</td>
-                <td>@item.Description</td>
-                <td>@item.SeasoningPrice</td>
-                <td>@item.Quantity</td>
-                <td>
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Quantity</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.Description</td>
+                    <td>@item.SeasoningPrice</td>
+                    <td>@item.Quantity</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    }
+</div>
+
+<p><a asp-controller="Seasoning" asp-action="Create">Create Seasoning Item</a></p>
+
+<p><a asp-controller="Seasoning" asp-action="Delete">Delete Seasoning Item</a></p>
+
+<p><a asp-controller="Seasoning" asp-action="Edit">Edit Seasoning Item</a></p>
+

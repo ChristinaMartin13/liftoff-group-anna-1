@@ -20,17 +20,25 @@ namespace option4mvc.Controllers
             return View(sizeList);
         }
 
+        [HttpGet]
+        public IActionResult Create()
+        {
+            Size size = new Size();
+            return View(size);
+        }
+
         [HttpPost]
         public IActionResult Create(Size size)
         {
             if (ModelState.IsValid)
             {
+
                 _context.Sizes.Add(size);
                 _context.SaveChanges();
 
-                return RedirectToAction("Index");
+                return Redirect("Index");
             }
-            return View(size);
+            return View("Create", size);
         }
 
         [HttpPost]

@@ -20,17 +20,25 @@ namespace option4mvc.Controllers
             return View(seasoningList);
         }
 
+        [HttpGet]
+        public IActionResult Create()
+        {
+            Seasoning seasoning = new Seasoning();
+            return View(seasoning);
+        }
+
         [HttpPost]
         public IActionResult Create(Seasoning seasoning)
         {
             if (ModelState.IsValid)
             {
+
                 _context.Seasonings.Add(seasoning);
                 _context.SaveChanges();
 
-                return RedirectToAction("Index");
+                return Redirect("Index");
             }
-            return View(seasoning);
+            return View("Create", seasoning);
         }
 
         [HttpPost]

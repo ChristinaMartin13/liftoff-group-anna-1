@@ -1,32 +1,32 @@
-﻿@model option4mvc.Models.Popcorn
+﻿@model option4mvc.Models.Packaging
 
-<h2>Create Popcorn Item</h2>
-  <br />
+<h2>Create Packaging Item</h2>
+<br />
 
-<form asp-controller="Popcorn" asp-action="Create" method="post">
+<form asp-controller="Packaging" asp-action="Create" method="post">
     <div class="form-group">
-        <label asp-for="Name">Popcorn Name</label>
+        <label asp-for="Name">Packaging Name</label>
         <input asp-for="Name" class="form-control" />
         <span asp-validation-for="Name" class="text-danger"></span>
     </div>
     <br />
 
     <div class="form-group">
-        <label asp-for="Description">Popcorn Description</label>
+        <label asp-for="Description">Packaging Description</label>
         <input asp-for="Description" class="form-control" />
         <span asp-validation-for="Description" class="text-danger"></span>
     </div>
     <br />
 
     <div class="form-group">
-        <label asp-for="PopcornPrice">Popcorn Price</label>
-        <input asp-for="PopcornPrice" class="form-control" />
-        <span asp-validation-for="PopcornPrice" class="text-danger"></span>
+        <label asp-for="PackagingPrice">Packaging Price</label>
+        <input asp-for="PackagingPrice" class="form-control" />
+        <span asp-validation-for="PackagingPrice" class="text-danger"></span>
     </div>
     <br />
 
     <div class="form-group">
-        <label asp-for="Quantity">Popcorn InStock Quantity</label>
+        <label asp-for="Quantity">Packaging InStock Quantity</label>
         <input asp-for="Quantity" class="form-control" />
         <span asp-validation-for="Quantity" class="text-danger"></span>
     </div>

@@ -20,17 +20,25 @@ namespace option4mvc.Controllers
             return View(packagingList);
         }
 
+        [HttpGet]
+        public IActionResult Create()
+        {
+            Packaging packaging = new Packaging();
+            return View(packaging);
+        }
+
         [HttpPost]
         public IActionResult Create(Packaging packaging)
         {
             if (ModelState.IsValid)
             {
+
                 _context.Packagings.Add(packaging);
                 _context.SaveChanges();
 
-                return RedirectToAction("Index");
+                return Redirect("Index");
             }
-            return View(packaging);
+            return View("Create", packaging);
         }
 
         [HttpPost]
