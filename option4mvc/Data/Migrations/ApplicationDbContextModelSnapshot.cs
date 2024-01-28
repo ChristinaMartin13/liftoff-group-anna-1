@@ -268,7 +268,7 @@ namespace option4mvc.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<decimal?>("Price")
+                    b.Property<decimal?>("PackagingPrice")
                         .IsRequired()
                         .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
@@ -299,7 +299,7 @@ namespace option4mvc.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<decimal?>("Price")
+                    b.Property<decimal?>("PopcornPrice")
                         .IsRequired()
                         .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
@@ -330,13 +330,13 @@ namespace option4mvc.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<decimal?>("Price")
+                    b.Property<int?>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<decimal?>("SeasoningPrice")
                         .IsRequired()
                         .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
-
-                    b.Property<int?>("Quantity")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -361,13 +361,13 @@ namespace option4mvc.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<decimal?>("Price")
+                    b.Property<int?>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<decimal?>("SizePrice")
                         .IsRequired()
                         .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
-
-                    b.Property<int?>("Quantity")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
