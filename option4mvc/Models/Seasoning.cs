@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace option4mvc.Models
 {
@@ -16,9 +17,20 @@ namespace option4mvc.Models
 
         [Required(ErrorMessage = "Price is required")]
         [Range(0.01, double.MaxValue, ErrorMessage = "Price must be 0.01 or greater.")]
+        [Precision(18, 2)]
         public decimal? Price { get; set; }
 
         [Range(0.01, int.MaxValue, ErrorMessage = "Quantity must be 1 or greater.")]
         public int? Quantity { get; set; }
+        public Seasoning() { }
+
+        public Seasoning(string name, string description, decimal? price)
+        {
+            Name = name;
+            Description = description;
+            Price = price;
+            Quantity = 0;
+        }
+
     }
 }
