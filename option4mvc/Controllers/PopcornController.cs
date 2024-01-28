@@ -34,6 +34,7 @@ namespace option4mvc.Controllers
         {
             if(ModelState.IsValid)
             {
+               
                 _context.Popcorns.Add(popcorn);
                 _context.SaveChanges();
 
