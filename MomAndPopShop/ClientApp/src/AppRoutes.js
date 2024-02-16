@@ -21,6 +21,7 @@ import CreateSizes from './components/Sizes/Create';
 import ProductHome from './components/ProductHome';
 import Cart from './components/Cart';
 import CartDisplay from './components/CartDisplay';
+import {StripeApp} from './components/Stripe-Api/StripeApp'; }
 
 const AppRoutes = [
     {
@@ -39,6 +40,10 @@ const AppRoutes = [
         path: '/cart-display',
         element: <CartDisplay />
     },
+    {
+        path: '/stripe',
+        element: <StripeApp />
+    },}
     {
         path: '/product-home',
         element: <ProductHome />

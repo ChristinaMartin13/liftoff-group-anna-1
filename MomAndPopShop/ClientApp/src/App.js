@@ -4,6 +4,7 @@ import AppRoutes from './AppRoutes';
 import AuthorizeRoute from './components/api-authorization/AuthorizeRoute';
 import { Layout } from './components/Layout';
 import './custom.css';
+import {StripeApp} from './components/Stripe-Api/StripeApp'; }
 
 export default class App extends Component {
   static displayName = App.name;
