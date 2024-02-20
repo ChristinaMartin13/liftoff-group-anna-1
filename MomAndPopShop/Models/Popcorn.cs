@@ -28,6 +28,10 @@ namespace MomAndPopShop.Models
         /*This is the SKU addition for stripe product connection*/
         public string? StripeSku { get; set; } = "";
 
+        public List<ApplicationUser>? UsersThatFavorited { get; set; }
+
+        public List<ApplicationUser>? UsersThatPurchased { get; set; }
+
         public Popcorn(string name, string description, decimal? popcornPrice, string? stripeSku)
         {
             Name = name;

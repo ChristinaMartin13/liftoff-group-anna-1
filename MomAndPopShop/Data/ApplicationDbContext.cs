@@ -18,6 +18,10 @@ namespace MomAndPopShop.Data
         public DbSet<Order> Orders { get; set; }
         public DbSet<Cart> Carts { get; set; }
 
+        public DbSet<ApplicationUserFavoritedPopcorns> ApplicationUserFavoritedPopcorns { get; set; }
+
+        public DbSet<ApplicationUserPurchasedPopcorns> ApplicationUserPurchasedPopcorns { get; set; }
+
         public DbSet<ContactForm> ContactForms { get; set; }
         public ApplicationDbContext(DbContextOptions options, IOptions<OperationalStoreOptions> operationalStoreOptions)
             : base(options, operationalStoreOptions)
@@ -32,6 +36,18 @@ namespace MomAndPopShop.Data
 
             builder.Entity<Cart>()
                 .HasMany(b => b.Items);*/
+
+            builder.Entity<ApplicationUser>()
+                .HasMany(p => p.PurchasedPopcorns);
+
+            builder.Entity<ApplicationUser>()
+                .HasMany(f => f.FavoritedPopcorns);
+
+            builder.Entity<Popcorn>()
+                .HasMany(u => u.UsersThatPurchased);
+
+            builder.Entity<Popcorn>()
+               .HasMany(u => u.UsersThatFavorited);
 
             base.OnModelCreating(builder);
         }

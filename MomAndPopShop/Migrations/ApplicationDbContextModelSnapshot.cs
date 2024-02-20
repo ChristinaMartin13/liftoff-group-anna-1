@@ -351,6 +351,12 @@ namespace MomAndPopShop.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<int?>("PopcornId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PopcornId1")
+                        .HasColumnType("int");
+
                     b.Property<string>("ProfilePicture")
                         .HasColumnType("nvarchar(max)");
 
@@ -386,7 +392,109 @@ namespace MomAndPopShop.Migrations
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
+                    b.HasIndex("PopcornId");
+
+                    b.HasIndex("PopcornId1");
+
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("MomAndPopShop.Models.ApplicationUserFavoritedPopcorns", b =>
+                {
+                    b.Property<int>("ApplicationUserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ApplicationUserId"), 1L, 1);
+
+                    b.Property<int>("PopcornId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("ApplicationUserId");
+
+                    b.HasIndex("PopcornId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ApplicationUserFavoritedPopcorns");
+                });
+
+            modelBuilder.Entity("MomAndPopShop.Models.ApplicationUserPurchasedPopcorns", b =>
+                {
+                    b.Property<int>("ApplicationUserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ApplicationUserId"), 1L, 1);
+
+                    b.Property<int>("PopcornId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("ApplicationUserId");
+
+                    b.HasIndex("PopcornId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ApplicationUserPurchasedPopcorns");
+                });
+
+            modelBuilder.Entity("MomAndPopShop.Models.Cart", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<decimal?>("TotalCost")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Carts");
+                });
+
+            modelBuilder.Entity("MomAndPopShop.Models.CartItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("CartId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PopcornItemId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CartId");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("PopcornItemId");
+
+                    b.ToTable("CartItem");
                 });
 
             modelBuilder.Entity("MomAndPopShop.Models.ContactForm", b =>
@@ -440,6 +548,23 @@ namespace MomAndPopShop.Migrations
                     b.ToTable("CustomerReviews");
                 });
 
+            modelBuilder.Entity("MomAndPopShop.Models.Order", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Orders");
+                });
+
             modelBuilder.Entity("MomAndPopShop.Models.Packaging", b =>
                 {
                     b.Property<int>("Id")
@@ -479,6 +604,12 @@ namespace MomAndPopShop.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ApplicationUserId1")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(500)
@@ -498,10 +629,13 @@ namespace MomAndPopShop.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("StripeSku")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("ApplicationUserId1");
 
                     b.ToTable("Popcorns");
                 });
@@ -657,6 +791,105 @@ namespace MomAndPopShop.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("MomAndPopShop.Models.ApplicationUser", b =>
+                {
+                    b.HasOne("MomAndPopShop.Models.Popcorn", null)
+                        .WithMany("UsersThatPurchased")
+                        .HasForeignKey("PopcornId");
+
+                    b.HasOne("MomAndPopShop.Models.Popcorn", null)
+                        .WithMany("UsersThatFavorited")
+                        .HasForeignKey("PopcornId1");
+                });
+
+            modelBuilder.Entity("MomAndPopShop.Models.ApplicationUserFavoritedPopcorns", b =>
+                {
+                    b.HasOne("MomAndPopShop.Models.Popcorn", "FavoritedPopcorn")
+                        .WithMany()
+                        .HasForeignKey("PopcornId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MomAndPopShop.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("FavoritedPopcorn");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("MomAndPopShop.Models.ApplicationUserPurchasedPopcorns", b =>
+                {
+                    b.HasOne("MomAndPopShop.Models.Popcorn", "PurchasedPopcorn")
+                        .WithMany()
+                        .HasForeignKey("PopcornId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MomAndPopShop.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("PurchasedPopcorn");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("MomAndPopShop.Models.CartItem", b =>
+                {
+                    b.HasOne("MomAndPopShop.Models.Cart", null)
+                        .WithMany("Items")
+                        .HasForeignKey("CartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MomAndPopShop.Models.Order", null)
+                        .WithMany("Items")
+                        .HasForeignKey("OrderId");
+
+                    b.HasOne("MomAndPopShop.Models.Popcorn", "PopcornItem")
+                        .WithMany()
+                        .HasForeignKey("PopcornItemId");
+
+                    b.Navigation("PopcornItem");
+                });
+
+            modelBuilder.Entity("MomAndPopShop.Models.Popcorn", b =>
+                {
+                    b.HasOne("MomAndPopShop.Models.ApplicationUser", null)
+                        .WithMany("PurchasedPopcorns")
+                        .HasForeignKey("ApplicationUserId");
+
+                    b.HasOne("MomAndPopShop.Models.ApplicationUser", null)
+                        .WithMany("FavoritedPopcorns")
+                        .HasForeignKey("ApplicationUserId1");
+                });
+
+            modelBuilder.Entity("MomAndPopShop.Models.ApplicationUser", b =>
+                {
+                    b.Navigation("FavoritedPopcorns");
+
+                    b.Navigation("PurchasedPopcorns");
+                });
+
+            modelBuilder.Entity("MomAndPopShop.Models.Cart", b =>
+                {
+                    b.Navigation("Items");
+                });
+
+            modelBuilder.Entity("MomAndPopShop.Models.Order", b =>
+                {
+                    b.Navigation("Items");
+                });
+
+            modelBuilder.Entity("MomAndPopShop.Models.Popcorn", b =>
+                {
+                    b.Navigation("UsersThatFavorited");
+
+                    b.Navigation("UsersThatPurchased");
                 });
 #pragma warning restore 612, 618
         }

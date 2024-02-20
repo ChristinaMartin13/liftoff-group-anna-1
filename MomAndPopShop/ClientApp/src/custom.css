@@ -21,6 +21,24 @@ code {
     text-align: center;
 }
 
+/*Favoriting css is below*/
+
+.favBox {
+    position: relative;
+    float: left;
+}
+
+    .favBox .hoverFav {
+        position: absolute;
+        right: 0;
+        top: 0;
+        display: none;
+    }
+
+    .favBox:hover .hoverFav {
+        display: block;
+    }
+
 /* Below is copied from https://www.w3schools.com/howto/howto_css_two_columns.asp */
 
 .column {
