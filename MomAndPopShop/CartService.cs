@@ -33,12 +33,14 @@ namespace MomAndPopShop
                 {
                     PopcornItem = item,
                     Quantity = quantity,
+                    Cost = item.PopcornPrice * quantity,
                 };
                 _cart.Items.Add(newItem);
             }
             else
             {
                 existingItem.Quantity = quantity;
+                existingItem.Cost = existingItem.PopcornItem.PopcornPrice * existingItem.Quantity;
                 UpdateCartInSession();
             }
             //UpdateCartInSession();
@@ -55,12 +57,14 @@ namespace MomAndPopShop
                 {
                     PopcornItem = item,
                     Quantity = quantity,
+                    Cost = item.PopcornPrice * quantity,
                 };
                 _cart.Items.Add(newItem);
             }
             else
             {
                 existingItem.Quantity += quantity;
+                existingItem.Cost = existingItem.PopcornItem.PopcornPrice * existingItem.Quantity;
                 UpdateCartInSession();
             }
         }
@@ -74,21 +78,26 @@ namespace MomAndPopShop
         public void UpdateCart(Cart cart)
         {
             _cart = cart;
-            SaveCartToSession(_cart);
+            UpdateCartInSession();
+            //SaveCartToSession(_cart);
         }
 
-        private void SaveCartToSession(Cart cart)
+        public void SaveCartToDatabase(Cart cart)
         {
-            var cartJson = JsonConvert.SerializeObject(cart);
-            var cartDb = _context.Carts;
-            _httpContextAccessor.HttpContext.Session.SetString("Cart", cartJson);
-            cartDb.Add(cart);
-
-        }
-
-        public void SaveCart()
-        {
-            SaveCartToSession(_cart);
+            //rewrite this method to save the cart to the database
+            //use a new model to save the cart to the database without identity
+            cart = GetCart();
+            var saveCart = new Cart
+            {
+                Items = cart.Items.Select(x => new CartItem
+                {
+                    PopcornItem = x.PopcornItem,
+                    Quantity = x.Quantity,
+                    Cost = x.Cost
+                }).ToList()
+            };
+            _context.Carts.Add(saveCart);
+            _context.SaveChanges();
         }
 
         private Cart GetCartFromSession()
